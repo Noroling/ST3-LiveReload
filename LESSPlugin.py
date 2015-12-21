@@ -67,12 +67,11 @@ class LessThread(threading.Thread):
         cmd = self.command + " " + self.filename + " " + self.filename.replace('.less','.css')
 
         p = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE,
+                             cwd=self.dirname,
                              stdout=subprocess.PIPE,
                              stderr=subprocess.STDOUT)
-        test = p.stdout.read()
-        if test:
-            print("ATSDFASDFASDFASD!!")
-            print(test)
+        result = p.stdout.read()
+        if result:
             self.on_compile()
 
 class lessPreprocessor(LiveReload.Plugin, sublime_plugin.EventListener):
